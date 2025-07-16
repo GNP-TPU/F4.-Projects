@@ -1,0 +1,20 @@
+--cpu=Cortex-M4.fp.sp
+".\objects\main.o"
+".\objects\dma.o"
+".\objects\flash.o"
+".\objects\gpio.o"
+".\objects\i2c.o"
+".\objects\rcc.o"
+".\objects\spi.o"
+".\objects\tim.o"
+".\objects\uart.o"
+".\objects\interrupt_handlers.o"
+".\objects\dcmi.o"
+".\objects\ili9488.o"
+".\objects\ov7670.o"
+".\objects\image_convertion.o"
+".\objects\startup_stm32f407xx.o"
+".\objects\system_stm32f4xx.o"
+--ro-base 0x08000000 --entry 0x08000000 --rw-base 0x20000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Camera.map" -o .\Objects\Camera.axf

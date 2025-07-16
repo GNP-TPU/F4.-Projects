@@ -1,0 +1,188 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ÂµVision V5.37.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: George Polikarpov, National Research Tomsk Polytech University, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.37.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.18
+Assembler:       Armasm.exe V6.18
+Linker/Locator:  ArmLink.exe V6.18
+Library Manager: ArmAr.exe V6.18
+Hex Converter:   FromElf.exe V6.18
+CPU DLL:         SARMCM3.DLL V5.37.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
+Dialog DLL:      TCM.DLL V1.56.1.0
+ 
+<h2>Project:</h2>
+C:\Users\pkiri\OneDrive\Documents\F401RE\ESP8266\ESP8266.uvprojx
+Project File Date:  05/30/2024
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.18', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+ESP-01.c(8): warning: no previous extern declaration for non-static variable 'basic_page' [-Wmissing-variable-declarations]
+char basic_page[] = "<!DOCTYPE html> <html>\n<head><meta name=\"viewport\"\
+     ^
+ESP-01.c(8): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char basic_page[] = "<!DOCTYPE html> <html>\n<head><meta name=\"viewport\"\
+^
+ESP-01.c(22): warning: no previous extern declaration for non-static variable 'LED_ON' [-Wmissing-variable-declarations]
+char LED_ON[] = "<p>LED Status: ON</p><a class=\"button button-off\" href=\"/ledoff\">OFF</a>";
+     ^
+ESP-01.c(22): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char LED_ON[] = "<p>LED Status: ON</p><a class=\"button button-off\" href=\"/ledoff\">OFF</a>";
+^
+ESP-01.c(23): warning: no previous extern declaration for non-static variable 'LED_OFF' [-Wmissing-variable-declarations]
+char LED_OFF[] = "<p>LED1 Status: OFF</p><a class=\"button button-on\" href=\"/ledon\">ON</a>";
+     ^
+ESP-01.c(23): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char LED_OFF[] = "<p>LED1 Status: OFF</p><a class=\"button button-on\" href=\"/ledon\">ON</a>";
+^
+ESP-01.c(24): warning: no previous extern declaration for non-static variable 'Terminate' [-Wmissing-variable-declarations]
+char Terminate[] = "</body></html>";
+     ^
+ESP-01.c(24): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char Terminate[] = "</body></html>";
+^
+ESP-01.c(27): warning: no previous extern declaration for non-static variable 'buffer_counter' [-Wmissing-variable-declarations]
+uint8_t buffer_counter = 0, OK_flag = 0;
+        ^
+ESP-01.c(27): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+uint8_t buffer_counter = 0, OK_flag = 0;
+^
+ESP-01.c(27): warning: no previous extern declaration for non-static variable 'OK_flag' [-Wmissing-variable-declarations]
+uint8_t buffer_counter = 0, OK_flag = 0;
+                            ^
+ESP-01.c(27): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+uint8_t buffer_counter = 0, OK_flag = 0;
+^
+ESP-01.c(56): warning: implicitly declaring library function 'strstr' with type 'char *(const char *, const char *)' [-Wimplicit-function-declaration]
+        while(strstr(buffer, "WIFI GOT IP\r\n\r\nOK\r\n") == 0);
+              ^
+ESP-01.c(56): note: include the header <string.h> or explicitly provide a declaration for 'strstr'
+ESP-01.c(80): warning: declaration shadows a variable in the global scope [-Wshadow]
+int ESP_Send(char* strq, int LinkID){
+                             ^
+ESP-01.c(29): note: previous declaration is here
+char LinkID;
+     ^
+ESP-01.c(83): warning: implicitly declaring library function 'strlen' with type 'unsigned int (const char *)' [-Wimplicit-function-declaration]
+  len = strlen(strq);
+        ^
+ESP-01.c(83): note: include the header <string.h> or explicitly provide a declaration for 'strlen'
+ESP-01.c(83): warning: implicit conversion changes signedness: 'unsigned int' to 'int' [-Wsign-conversion]
+  len = strlen(strq);
+      ~ ^~~~~~~~~~~~
+ESP-01.c(82): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        int len;
+            ^
+ESP-01.c(102): warning: declaration shadows a variable in the global scope [-Wshadow]
+void Server_Handle(char* strq, int LinkID){
+                                   ^
+ESP-01.c(29): note: previous declaration is here
+char LinkID;
+     ^
+ESP-01.c(106): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                sprintf(data, basic_page);
+                              ^~~~~~~~~~
+ESP-01.c(106): note: treat the string as an argument to avoid this
+                sprintf(data, basic_page);
+                              ^
+                              "%s", 
+ESP-01.c(107): warning: implicitly declaring library function 'strcat' with type 'char *(char *, const char *)' [-Wimplicit-function-declaration]
+                strcat(data, LED_ON);
+                ^
+ESP-01.c(107): note: include the header <string.h> or explicitly provide a declaration for 'strcat'
+ESP-01.c(112): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                sprintf(data, basic_page);
+                              ^~~~~~~~~~
+ESP-01.c(112): note: treat the string as an argument to avoid this
+                sprintf(data, basic_page);
+                              ^
+                              "%s", 
+ESP-01.c(122): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                sprintf(data, basic_page);
+                              ^~~~~~~~~~
+ESP-01.c(122): note: treat the string as an argument to avoid this
+                sprintf(data, basic_page);
+                              ^
+                              "%s", 
+ESP-01.c(104): warning: mixing declarations and code is incompatible with standards before C99 [-Wdeclaration-after-statement]
+        char data[1024] = {0};
+             ^
+ESP-01.c(26): warning: no previous extern declaration for non-static variable 'buffer' [-Wmissing-variable-declarations]
+char buffer[200];
+     ^
+ESP-01.c(26): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char buffer[200];
+^
+ESP-01.c(28): warning: no previous extern declaration for non-static variable 'pa' [-Wmissing-variable-declarations]
+char* pa;
+      ^
+ESP-01.c(28): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char* pa;
+^
+ESP-01.c(29): warning: no previous extern declaration for non-static variable 'LinkID' [-Wmissing-variable-declarations]
+char LinkID;
+     ^
+ESP-01.c(29): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+char LinkID;
+^
+ESP-01.c(30): warning: no previous extern declaration for non-static variable 'v' [-Wmissing-variable-declarations]
+int v, D;
+    ^
+ESP-01.c(30): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int v, D;
+^
+ESP-01.c(30): warning: no previous extern declaration for non-static variable 'D' [-Wmissing-variable-declarations]
+int v, D;
+       ^
+ESP-01.c(30): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+int v, D;
+^
+22 warnings generated.
+compiling ESP-01.c...
+linking...
+Program Size: Code=9396 RO-data=1244 RW-data=1024 ZI-data=1848  
+".\Objects\ESP8266.axf" - 0 Error(s), 22 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F4xx_DFP.2.17.0.pack
+                Keil.STM32F4xx_DFP.2.17.0
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 2.6.3
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/_Target_1
+  C:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  C:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.0/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+
+   * Component: Keil::Device:Startup:2.6.3
+      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Source file:   MDK/Device/Source/ARM/STM32F401xx_OPT.s
+      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f401xe.s
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>

@@ -1,0 +1,116 @@
+Dependencies for Project 'TouchScreen', Target 'TouchScreenTarget': (DO NOT MODIFY !)
+CompilerVersion: 6220000::V6.22::ARMCLANG
+F (.\DMA.c)(0x684AB0FA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/dma.o -MMD)
+I (DMA.h)(0x684ABE20)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\FLASH.c)(0x67B8FCAE)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/flash.o -MMD)
+I (FLASH.h)(0x677E6342)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\GPIO.c)(0x684ABC2F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/gpio.o -MMD)
+I (GPIO.h)(0x684ABC2F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\I2C.c)(0x67C45A26)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/i2c.o -MMD)
+I (I2C.h)(0x67C233BE)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\Interrupt_Handlers.c)(0x684ABC2F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/interrupt_handlers.o -MMD)
+I (main.h)(0x67C84536)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (RCC.h)(0x67810B88)
+I (FLASH.h)(0x677E6342)
+I (GPIO.h)(0x684ABC2F)
+I (UART.h)(0x67C4A609)
+I (SPI.h)(0x684AAE9A)
+I (I2C.h)(0x67C233BE)
+I (TIM.h)(0x67B99093)
+I (DMA.h)(0x684ABE20)
+I (Interrupt_Handlers.h)(0x67810C70)
+I (ST77xx.h)(0x684AADE1)
+I (XPT2046.h)(0x67C84536)
+F (.\main.c)(0x684ABBA3)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/main.o -MMD)
+I (main.h)(0x67C84536)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (RCC.h)(0x67810B88)
+I (FLASH.h)(0x677E6342)
+I (GPIO.h)(0x684ABC2F)
+I (UART.h)(0x67C4A609)
+I (SPI.h)(0x684AAE9A)
+I (I2C.h)(0x67C233BE)
+I (TIM.h)(0x67B99093)
+I (DMA.h)(0x684ABE20)
+I (Interrupt_Handlers.h)(0x67810C70)
+I (ST77xx.h)(0x684AADE1)
+I (XPT2046.h)(0x67C84536)
+F (.\RCC.c)(0x67C6D0FC)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/rcc.o -MMD)
+I (RCC.h)(0x67810B88)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\SPI.c)(0x684AAE9A)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/spi.o -MMD)
+I (SPI.h)(0x684AAE9A)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\ST77xx.c)(0x684AB685)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/st77xx.o -MMD)
+I (ST77xx.h)(0x684AADE1)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+I (RCC.h)(0x67810B88)
+I (SPI.h)(0x684AAE9A)
+F (.\TIM.c)(0x67C24B45)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/tim.o -MMD)
+I (TIM.h)(0x67B99093)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\UART.c)(0x67B734F5)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/uart.o -MMD)
+I (UART.h)(0x67C4A609)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\XPT2046.c)(0x67C84536)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/xpt2046.o -MMD)
+I (XPT2046.h)(0x67C84536)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
+F (.\DMA.h)(0x684ABE20)()
+F (.\FLASH.h)(0x677E6342)()
+F (.\GPIO.h)(0x684ABC2F)()
+F (.\I2C.h)(0x67C233BE)()
+F (.\Interrupt_Handlers.h)(0x67810C70)()
+F (.\main.h)(0x67C84536)()
+F (.\RCC.h)(0x67810B88)()
+F (.\SPI.h)(0x684AAE9A)()
+F (.\ST77xx.h)(0x684AADE1)()
+F (.\TIM.h)(0x67B99093)()
+F (.\UART.h)(0x67C4A609)()
+F (.\XPT2046.h)(0x67C84536)()
+F (RTE/Device/STM32F411CEUx/startup_stm32f411xe.s)(0x67908B22)(--target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -masm=auto  -Wa,armasm,--diag_suppress=A1950W -c-gdwarf-4 -Wa,armasm,--pd,"__EVAL SETA 1"-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-Wa,armasm,--pd,"__UVISION_VERSION SETA 540" -Wa,armasm,--pd,"STM32F411xE SETA 1" -Wa,armasm,--pd,"_RTE_ SETA 1"-o ./objects/startup_stm32f411xe.o)
+F (RTE/Device/STM32F411CEUx/system_stm32f4xx.c)(0x67908B21)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O0 -ffunction-sections -Wall -Wextra -Wno-packed -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier-I./RTE/_TouchScreenTarget-IC:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include-D__UVISION_VERSION="540" -DSTM32F411xE -D_RTE_-o ./objects/system_stm32f4xx.o -MMD)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h)(0x67908B21)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f411xe.h)(0x67908B1F)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\ARM\CMSIS\6.1.0\CMSIS\Core\Include\core_cm4.h)(0x664BE698)
+I (C:\Users\pkiri\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h)(0x67908B21)
