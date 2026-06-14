@@ -1,0 +1,608 @@
+#include "RC522.h"
+
+RC522_TypeDef RC522_InitStruct;
+
+uint8_t KeyA[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+uint8_t KeyB[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+static void RC522_CS_HIGH(void){
+	RC522_InitStruct.CS_Port->BSRR = (uint32_t)RC522_InitStruct.CS_Pin;
+}
+
+static void RC522_CS_LOW(void){
+	RC522_InitStruct.CS_Port->BSRR = (uint32_t)RC522_InitStruct.CS_Pin << 16;
+}
+
+static void RC522_RST_HIGH(void){
+	RC522_InitStruct.RST_Port->BSRR = (uint32_t)RC522_InitStruct.RST_Pin;
+}
+
+static void RC522_RST_LOW(void){
+	RC522_InitStruct.RST_Port->BSRR = (uint32_t)RC522_InitStruct.RST_Pin << 16;
+}
+
+static uint8_t RC522_ReadRegister(uint8_t reg){
+	RC522_CS_LOW();
+	reg = ((reg << 1) & 0x7E) | 0x80;
+	SPI_Transmit(RC522_InitStruct.SPI, &reg, 1);
+	uint8_t dataRx = 0;
+	SPI_Receive(RC522_InitStruct.SPI, &dataRx, 1);
+	RC522_CS_HIGH();
+	return dataRx;
+}
+
+static void RC522_WriteRegister(uint8_t reg, uint8_t data){
+	RC522_CS_LOW();
+	uint8_t dataTx[2] = {0x7E & (reg << 1), data};
+	SPI_Transmit(RC522_InitStruct.SPI, dataTx, 2);
+	RC522_CS_HIGH();
+}
+
+static void RC522_SetBit(uint8_t reg, uint8_t mask){
+	RC522_WriteRegister(reg, RC522_ReadRegister(reg) | mask);
+}
+
+static void RC522_ClearBit(uint8_t reg, uint8_t mask){
+	RC522_WriteRegister(reg, RC522_ReadRegister(reg) & (~mask));
+}
+
+static void RC522_Reset(void){
+	RC522_WriteRegister(0x01, 0x0F);
+}
+
+static void RC522_AntennaON(void){
+	uint8_t temp;
+	
+	temp = RC522_ReadRegister(MFRC522_REG_TX_CONTROL);
+	if(!(temp & 0x03))
+		RC522_SetBit(MFRC522_REG_TX_CONTROL, 0x03);
+}
+
+static uint8_t RC522_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t* backData, uint16_t* backLen){
+	uint8_t status = MI_ERR;
+	uint8_t irqEn = 0x00;
+	uint8_t waitIRq = 0x00;
+	uint8_t lastBits;
+	uint8_t check;
+	uint16_t i;
+	
+	switch(command){
+		case PCD_AUTHENT:{
+			irqEn = 0x12;
+			waitIRq = 0x10;
+			break;
+		}
+		case PCD_TRANSCEIVE:{
+			irqEn = 0x77;
+			waitIRq = 0x30;
+			break;
+		}
+		default:
+			break;
+	}
+	
+	RC522_WriteRegister(MFRC522_REG_COMM_IE_N, irqEn | 0x80);
+	RC522_ClearBit(MFRC522_REG_COMM_IRQ, 0x80);
+	RC522_SetBit(MFRC522_REG_FIFO_LEVEL, 0x80);
+	
+	RC522_WriteRegister(MFRC522_REG_COMMAND, PCD_IDLE);
+	
+	for(i = 0; i < sendLen; i++){
+		RC522_WriteRegister(MFRC522_REG_FIFO_DATA, sendData[i]);
+	}
+	
+	RC522_WriteRegister(MFRC522_REG_COMMAND, command);
+	
+	if(command == PCD_TRANSCEIVE){
+		RC522_SetBit(MFRC522_REG_BIT_FRAMING, 0x80);
+	}
+	
+	i = 30000;
+	do{
+		check = RC522_ReadRegister(MFRC522_REG_COMM_IRQ);
+		i--;
+	}while((i != 0) && !(check & 0x01) && !(check & waitIRq));
+	
+	RC522_ClearBit(MFRC522_REG_BIT_FRAMING, 0x80);
+	
+	if(i != 0){
+		if(!(RC522_ReadRegister(MFRC522_REG_ERROR) & 0x1B)){
+			status = MI_OK;
+			if(check & irqEn & 0x01){
+				status = MI_NOTAGERR;
+			}
+			
+			if(command == PCD_TRANSCEIVE){
+				check = RC522_ReadRegister(MFRC522_REG_FIFO_LEVEL);
+
+				lastBits = RC522_ReadRegister(MFRC522_REG_CONTROL) & 0x07;
+				if(lastBits){
+					*backLen = (check - 1) * 8 + lastBits;
+				}
+				else{
+					*backLen = check * 8;
+				}
+				
+				if(check == 0){
+					check = 1;
+				}
+				if(check > MFRC522_MAX_LEN){
+					check = MFRC522_MAX_LEN;
+				}
+				
+				for(i = 0; i < check; i++){
+					uint8_t d = RC522_ReadRegister(MFRC522_REG_FIFO_DATA);
+					backData[i] = d;
+				}
+				return status;
+			}
+		}		
+		else{
+			status = MI_ERR;
+		}
+	}
+	return status;
+}
+
+static uint8_t RC522_Request(uint8_t reqMode, uint8_t* tagType){
+	uint8_t status;
+	uint16_t backBits;
+	RC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x07);
+	tagType[0] = reqMode;
+	status = RC522_ToCard(PCD_TRANSCEIVE, tagType, 1, tagType, &backBits);
+	if((status != MI_OK) || (backBits != 0x10)){
+		status = MI_ERR;
+	}
+	return status;
+}
+
+static uint8_t RC522_AntiColl(uint8_t* serNum){
+	uint8_t status;
+	uint8_t i;
+	uint8_t serNumCheck = 0;
+	uint16_t unLen;
+	
+	RC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x00);
+	serNum[0] = PICC_ANTICOLL;
+	serNum[1] = 0x20;
+	status = RC522_ToCard(PCD_TRANSCEIVE, serNum, 2, serNum, &unLen);
+	
+	if(status == MI_OK){
+		for(i = 0; i < 4; i++){
+			serNumCheck ^= serNum[i];
+		}
+		if(serNumCheck != serNum[i]){
+			status = MI_ERR;
+		}
+	}
+	return status;
+}
+
+static void RC522_CalculateCRC(uint8_t* pIndata, uint8_t len, uint8_t* pOutData){
+	uint8_t i, n;
+	RC522_ClearBit(MFRC522_REG_DIV_IRQ, 0x04);
+	RC522_SetBit(MFRC522_REG_FIFO_LEVEL, 0x80);
+	
+	for(i = 0; i < len; i++){
+		RC522_WriteRegister(MFRC522_REG_FIFO_DATA, *(pIndata + i));
+	}
+	RC522_WriteRegister(MFRC522_REG_COMMAND, PCD_CALCCRC);
+	
+	i = 0xFF;
+	do{
+		n = RC522_ReadRegister(MFRC522_REG_DIV_IRQ);
+		i--;
+	}while((i != 0) && !(n & 0x04));
+	
+	pOutData[0] = RC522_ReadRegister(MFRC522_REG_CRC_RESULT_L);
+	pOutData[1] = RC522_ReadRegister(MFRC522_REG_CRC_RESULT_M);
+}
+
+static void RC522_Halt(void){
+	uint16_t unLen;
+	uint8_t buff[4];
+	
+	buff[0] = PICC_HALT;
+	buff[1] = 0;
+	RC522_CalculateCRC(buff, 2, &buff[2]);
+	
+	RC522_ToCard(PCD_TRANSCEIVE, buff, 4, buff, &unLen);
+}
+
+static uint8_t RC522_WriteBlock(uint8_t blockAddr, uint8_t* writeData){
+	uint8_t status;
+	uint16_t recvBits;
+	uint8_t i;
+	uint8_t buff[18];
+	buff[0] = PICC_WRITE;
+	buff[1] = blockAddr;
+	RC522_CalculateCRC(buff, 2, &buff[2]);
+	status = RC522_ToCard(PCD_TRANSCEIVE, buff, 4, buff, &recvBits);
+	if(status != MI_OK){
+		status = MI_ERR;
+	}
+	if(status == MI_OK){
+		for(i = 0; i < 16; i++){
+			buff[i] = *(writeData + i);
+		}
+		RC522_CalculateCRC(buff, 16, &buff[16]);
+		status = RC522_ToCard(PCD_TRANSCEIVE, buff, 18, buff, &recvBits);
+		if(status != MI_OK){
+			status = MI_ERR;
+		}
+	}
+	return status;
+}
+
+static uint8_t RC522_ReadBlock(uint8_t blockAddr, uint8_t* recvData){
+	uint8_t status;
+	uint16_t unLen;
+	recvData[0] = PICC_READ;
+	recvData[1] = blockAddr;
+	RC522_CalculateCRC(recvData, 2, &recvData[2]);
+	status = RC522_ToCard(PCD_TRANSCEIVE, recvData, 4, recvData, &unLen);
+	if((status != MI_OK) || (unLen != 0x90)){
+		status = MI_ERR;
+	}
+	return status;
+}
+
+static uint8_t RC522_SelectTag(uint8_t* serNum){
+	uint8_t i;
+	uint8_t status;
+	uint8_t size;
+	uint16_t recvBits;
+	uint8_t buffer[9];
+	buffer[0] = PICC_SElECTTAG;
+	buffer[1] = 0x70;
+	for(i = 0; i < 5; i++){
+		buffer[i + 2] = *(serNum + i);
+	}
+	RC522_CalculateCRC(buffer, 7, &buffer[7]);
+	status = RC522_ToCard(PCD_TRANSCEIVE, buffer, 9, buffer, &recvBits);
+	if((status == MI_OK) && (recvBits == 0x18)){
+		size = buffer[0];
+	}
+	else{
+		size = 0;
+	}
+	return size;
+}
+
+static uint8_t RC522_Auth(uint8_t authMode, uint8_t BlockAddr, uint8_t* SectorKey, uint8_t* serNum){
+	uint8_t status;
+	uint16_t recvBits;
+	uint8_t i;
+	uint8_t buff[12];
+	
+	buff[0] = authMode;
+	buff[1] = BlockAddr;
+	
+	for(i = 0; i < 6; i++){
+		buff[i + 2] = *(SectorKey + i);
+	}
+	for(i = 0; i < 4; i++){
+		buff[i + 8] = *(serNum + i);
+	}
+	status = RC522_ToCard(PCD_AUTHENT, buff, 12, buff, &recvBits);
+	if((status != MI_OK) || (!(RC522_ReadRegister(Status2Reg) & 0x08))){
+		status = MI_ERR;
+	}
+	return status;
+}
+
+static void RC522_StopCrypto1(void){
+	RC522_ClearBit(Status2Reg, 0x08);
+}
+//===============================================================================
+void RC522_Read_PICC_Data(RC522_Buffer* RC522_Data){
+	uint8_t BlockNumber 		= RC522_Data->Block + (RC522_Data->Sector * 4);
+	uint8_t SectorKeyBlock	= (RC522_Data->Sector * 4) + 3;
+	
+	uint8_t cardstr[17];
+	
+	uint8_t status = MI_OK;
+	uint8_t size	 = 0;
+	
+	memset(cardstr, 0, sizeof(cardstr));
+	status = RC522_Request(PICC_REQIDL, cardstr);
+	
+	if(status == MI_OK){
+		status = RC522_AntiColl(cardstr);
+		if(status == MI_OK){
+			for(uint8_t count = 0; count < 4; count++){
+				RC522_Data->UID[count] = cardstr[count];
+			}
+			size = RC522_SelectTag(cardstr);
+			if(size > 0){
+				RC522_Auth(RC522_Data->PICC_AuthMode, SectorKeyBlock, KeyB, cardstr);
+				RC522_ReadBlock(BlockNumber, cardstr);
+				for(uint8_t count = 0; count < 16; count++){
+					RC522_Data->PICC_ReadData[count] = cardstr[count];
+				}
+				RC522_Halt();
+				RC522_StopCrypto1();
+				RC522_Data->Status = 0x01;
+			}
+			else{
+				RC522_Data->Status = PICC_TagSelectError;
+			}
+		}
+		else{
+			RC522_Data->Status = PICC_AntiCollError;
+		}
+	}
+	else{
+		RC522_Data->Status = PICC_ReqError;
+	}
+}
+
+void RC522_Write_PICC_Data(RC522_Buffer* RC522_Data){
+	uint8_t BlockNumber 		= RC522_Data->Block + (RC522_Data->Sector * 4);
+	uint8_t SectorKeyBlock	= (RC522_Data->Sector * 4) + 3;
+	
+	uint8_t cardstr[17];
+	
+	uint8_t status = MI_OK;
+	uint8_t size 	 = 0;
+
+	memset(cardstr, 0, sizeof(cardstr));
+	status = RC522_Request(PICC_REQIDL, cardstr);
+	if(status == MI_OK){
+		status = RC522_AntiColl(cardstr);
+		if(status == MI_OK){
+			size = RC522_SelectTag(cardstr);
+			if(size > 0){
+				status = RC522_Auth(RC522_Data->PICC_AuthMode, SectorKeyBlock, KeyB, cardstr);
+				if(status == MI_OK){
+					RC522_WriteBlock(BlockNumber, RC522_Data->PICC_WriteData);
+				}
+				RC522_Halt();
+				RC522_StopCrypto1();
+			}
+		}
+	}
+}
+
+uint8_t RC522_SetUID(RC522_Buffer* RC522_Data, uint8_t* Data_Write){
+	uint8_t BlockNumber = 0;
+	uint8_t SectorKeyBlock = 3;
+	
+	uint8_t cardstr[17];
+	
+	uint8_t status = 0;
+	uint8_t size;
+	
+	memset(cardstr, 0, sizeof(cardstr));
+	status = RC522_Request(PICC_REQIDL, cardstr);
+	
+	if(status == MI_OK){
+		status = RC522_AntiColl(cardstr);
+		if(status == MI_OK){
+			for(uint8_t count = 0; count < 4; count++){
+				RC522_Data->UID[count] = cardstr[count];
+			}
+
+			size = RC522_SelectTag(cardstr);
+			if(size > 0){
+				RC522_Auth(RC522_Data->PICC_AuthMode, SectorKeyBlock, KeyB, cardstr);
+				RC522_ReadBlock(BlockNumber, cardstr);
+
+				for(uint8_t count = 0; count < 16; count++){
+					RC522_Data->PICC_ReadData[count] = cardstr[count];
+				}
+			}
+		}
+		RC522_Auth(RC522_Data->PICC_AuthMode, SectorKeyBlock, KeyB, cardstr);
+		RC522_ReadBlock(BlockNumber, cardstr);
+		for(uint8_t count = 0; count < 16; count++){
+			RC522_Data->PICC_ReadData[count] = cardstr[count];
+		}
+		RC522_StopCrypto1();
+				
+		uint16_t unLen;
+		uint8_t buff[4];
+		
+		memset(buff, 0, sizeof(buff));
+		RC522_Halt();
+		
+		RC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x07);
+		buff[0] = 0x40;
+		RC522_ToCard(PCD_TRANSCEIVE, &buff[0], 1, &buff[3], &unLen);
+
+		RC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x08);	
+		buff[0] = 0x43;
+		RC522_ToCard(PCD_TRANSCEIVE, &buff[0], 1, &buff[3], &unLen);
+
+		if((buff[3] == 0x0A)){
+			status = RC522_WriteBlock(BlockNumber, Data_Write);
+			if(status == MI_OK){
+				
+			}
+			else{
+				status = CardWriteErr;
+			}
+		}
+		
+		RC522_Halt();
+		RC522_StopCrypto1();
+	}
+	return status;
+}
+//==============================================================================
+void RC522_Init(RC522_TypeDef* RC522_Init_Configuration){
+	RC522_InitStruct.SPI				= SPI2;
+	
+	RC522_InitStruct.CS_Port 		= RC522_Init_Configuration->CS_Port;
+	RC522_InitStruct.CS_Pin  		= RC522_Init_Configuration->CS_Pin;
+	
+	RC522_InitStruct.RST_Port 	= RC522_Init_Configuration->RST_Port;
+	RC522_InitStruct.RST_Pin  	= RC522_Init_Configuration->RST_Pin;
+	
+	RC522_RST_HIGH();
+	
+	RC522_Reset();
+	
+	RC522_WriteRegister(MFRC522_REG_T_MODE, 0x80);
+	RC522_WriteRegister(MFRC522_REG_T_PRESCALER, 0xA9);
+	RC522_WriteRegister(MFRC522_REG_T_RELOAD_L, 0xE8);
+	RC522_WriteRegister(MFRC522_REG_T_RELOAD_H, 0x03);
+	
+	RC522_WriteRegister(MFRC522_REG_TX_AUTO, 0x40);
+	RC522_WriteRegister(MFRC522_REG_MODE, 0x3D);
+	
+	RC522_AntennaON();
+	
+	RC522_Init_Configuration->Version = RC522_ReadRegister(0x37); // Read RC522 version
+}
+
+/*
+void RC522_Read_PICC_Data(RC522_Buffer* RC522_Data) {
+    uint8_t BlockNumber = RC522_Data->Block + (RC522_Data->Sector * 4);
+    uint8_t SectorKeyBlock = (RC522_Data->Sector * 4) + 3;
+
+    uint8_t cardstr[17];
+    uint8_t status = MI_OK;
+    uint8_t size = 0;
+
+    memset(cardstr, 0, sizeof(cardstr));
+
+    // Запрос на обнаружение метки
+    RC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x07);
+    cardstr[0] = PICC_REQIDL;
+    uint16_t backBits;
+    
+    uint8_t irqEn = 0x00;
+    uint8_t waitIRq = 0x00;
+
+    // Настройка прерываний в зависимости от команды
+    irqEn = 0x77; // Для PCD_TRANSCEIVE
+    waitIRq = 0x30;
+
+    RC522_WriteRegister(MFRC522_REG_COMM_IE_N, irqEn | 0x80);
+    RC522_ClearBit(MFRC522_REG_COMM_IRQ, 0x80);
+    RC522_SetBit(MFRC522_REG_FIFO_LEVEL, 0x80);
+    RC522_WriteRegister(MFRC522_REG_COMMAND, PCD_IDLE);
+
+    // Отправка команды
+    RC522_WriteRegister(MFRC522_REG_FIFO_DATA, cardstr[0]);
+    RC522_WriteRegister(MFRC522_REG_COMMAND, PCD_TRANSCEIVE);
+
+    // Ожидание ответа
+    uint16_t i = 30000;
+    uint8_t check;
+    do {
+        check = RC522_ReadRegister(MFRC522_REG_COMM_IRQ);
+        i--;
+    } while ((i != 0) && !(check & 0x01) && !(check & waitIRq));
+
+    if (i != 0) {
+        if (!(RC522_ReadRegister(MFRC522_REG_ERROR) & 0x1B)) {
+            status = MI_OK;
+            if (check & irqEn & 0x01) {
+                status = MI_NOTAGERR;
+            }
+
+            // Обработка ответа
+            check = RC522_ReadRegister(MFRC522_REG_FIFO_LEVEL);
+            uint8_t lastBits = RC522_ReadRegister(MFRC522_REG_CONTROL) & 0x07;
+            if (lastBits) {
+                backBits = (check - 1) * 8 + lastBits;
+            } else {
+                backBits = check * 8;
+            }
+
+            if (check == 0) {
+                check = 1;
+            }
+            if (check > MFRC522_MAX_LEN) {
+                check = MFRC522_MAX_LEN;
+            }
+
+            for (i = 0; i < check; i++) {
+                cardstr[i] = RC522_ReadRegister(MFRC522_REG_FIFO_DATA);
+            }
+
+            // Обработка коллизий
+            uint8_t serNumCheck = 0;
+            cardstr[0] = PICC_ANTICOLL;
+            cardstr[1] = 0x20;
+            RC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x00);
+            for (i = 0; i < 2; i++) {
+                RC522_WriteRegister(MFRC522_REG_FIFO_DATA, cardstr[i]);
+            }
+            RC522_WriteRegister(MFRC522_REG_COMMAND, PCD_TRANSCEIVE);
+
+            i = 30000;
+            do {
+                check = RC522_ReadRegister(MFRC522_REG_COMM_IRQ);
+                i--;
+            } while ((i != 0) && !(check & 0x01));
+
+            if (i != 0) {
+                for (i = 0; i < 4; i++) {
+                    serNumCheck ^= cardstr[i];
+                }
+                if (serNumCheck != cardstr[4]) {
+                    status = MI_ERR;
+                }
+            }
+
+            // Выбор метки
+            uint8_t buffer[9];
+            buffer[0] = PICC_SElECTTAG;
+            buffer[1] = 0x70;
+            for (i = 0; i < 5; i++) {
+                buffer[i + 2] = cardstr[i];
+            }
+            RC522_CalculateCRC(buffer, 7, &buffer[7]);
+            uint16_t recvBits;
+            status = RC522_ToCard(PCD_TRANSCEIVE, buffer, 9, buffer, &recvBits);
+            if ((status == MI_OK) && (recvBits == 0x18)) {
+                size = buffer[0];
+            } else {
+                size = 0;
+            }
+
+            // Аутентификация
+            uint8_t buff[12];
+            buff[0] = RC522_Data->PICC_AuthMode;
+            buff[1] = SectorKeyBlock;
+            for (i = 0; i < 6; i++) {
+                buff[i + 2] = KeyB[i];
+            }
+            for (i = 0; i < 4; i++) {
+                buff[i + 8] = cardstr[i];
+            }
+            status = RC522_ToCard(PCD_AUTHENT, buff, 12, buff, &recvBits);
+            if ((status != MI_OK) || (!(RC522_ReadRegister(Status2Reg) & 0x08))) {
+                status = MI_ERR;
+            }
+
+            // Чтение блока
+            uint8_t readBuff[18];
+            readBuff[0] = PICC_READ;
+            readBuff[1] = BlockNumber;
+            RC522_CalculateCRC(readBuff, 2, &readBuff[2]);
+            status = RC522_ToCard(PCD_TRANSCEIVE, readBuff, 4, readBuff, &backBits);
+            if ((status != MI_OK) || (backBits != 0x90)) {
+                status = MI_ERR;
+            } else {
+                for (i = 0; i < 16; i++) {
+                    RC522_Data->PICC_ReadData[i] = readBuff[i];
+                }
+                RC522_Data->Status = 0x01;
+            }
+
+            // Завершение работы с меткой
+            uint16_t unLen;
+            uint8_t haltBuff[4];
+            haltBuff[0] = PICC_HALT;
+            haltBuff[1] = 0;
+            RC522_CalculateCRC(haltBuff, 2, &haltBuff[2]);
+            RC522_ToCard(PCD_TRANSCEIVE, haltBuff, 4, haltBuff, &unLen);
+            RC522_ClearBit(Status2Reg, 0x08); // Остановка криптографического процесса
+        }
+    }
+}
+*/

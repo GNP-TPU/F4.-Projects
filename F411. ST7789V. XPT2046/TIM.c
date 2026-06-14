@@ -38,8 +38,8 @@ void TIM_Init(TIM_TypeDef* TIMx, TIM_InitTypeDef* TIMx_Struct){
 			break;
 	}
 	
-	TIMx->PSC = (SystemCoreClock / 10000000) - 1;
-	TIMx->ARR = 100;
+	TIMx->PSC = (SystemCoreClock / 10000) - 1;
+	TIMx->ARR = 3500;
 	TIMx->DIER |= TIM_DIER_UIE;
 	TIMx->CR1 |= TIM_CR1_OPM;
 	TIMx->CR1 |= TIM_CR1_URS;
@@ -50,11 +50,11 @@ void TIM_Init(TIM_TypeDef* TIMx, TIM_InitTypeDef* TIMx_Struct){
 			break;
 		case (uint32_t)TIM2:
 			NVIC_EnableIRQ(TIM2_IRQn);
-			NVIC_SetPriority(TIM2_IRQn, 3);
+			NVIC_SetPriority(TIM2_IRQn, 4);
 			break;
 		case (uint32_t)TIM3:
 			NVIC_EnableIRQ(TIM3_IRQn);
-			NVIC_SetPriority(TIM3_IRQn, 2);
+			NVIC_SetPriority(TIM3_IRQn, 3);
 			break;
 	}
 	

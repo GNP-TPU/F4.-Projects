@@ -1,0 +1,113 @@
+<html>
+<body>
+<pre>
+<h1>�Vision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.43.1.0
+Copyright (C) 2025 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: George Polikarpov, Tomsk Polytechnic University, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.43.0.0
+Toolchain Path:  C:\Users\pkiri\AppData\Local\Keil_v5\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.24
+Assembler:       Armasm.exe V6.24
+Linker/Locator:  ArmLink.exe V6.24
+Library Manager: ArmAr.exe V6.24
+Hex Converter:   FromElf.exe V6.24
+CPU DLL:         SARMCM3.DLL V5.43.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.3.1.0
+Dialog DLL:      TCM.DLL V1.56.6.0
+ 
+<h2>Project:</h2>
+C:\Users\pkiri\Documents\Codes\STM32. Keil\F4. Projects\F411. USB\USB.uvprojx
+Project File Date:  05/28/2026
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.24', folder: 'C:\Users\pkiri\AppData\Local\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+main.c(219): warning: 'EP1_IN_ADDR' macro redefined [-Wmacro-redefined]
+  219 | #define EP1_IN_ADDR                 0x81U  // HID Combo (IN)
+      |         ^
+main.c(37): note: previous definition is here
+   37 | #define EP1_IN_ADDR           0x81
+      |         ^
+main.c(220): warning: 'EP2_IN_ADDR' macro redefined [-Wmacro-redefined]
+  220 | #define EP2_IN_ADDR                 0x82U  // CDC ACM Interrupt (IN)
+      |         ^
+main.c(40): note: previous definition is here
+   40 | #define EP2_IN_ADDR           0x82
+      |         ^
+main.c(224): warning: 'EP0_MAX_PACKET_SIZE' macro redefined [-Wmacro-redefined]
+  224 | #define EP0_MAX_PACKET_SIZE         64U
+      |         ^
+main.c(35): note: previous definition is here
+   35 | #define EP0_MAX_PACKET_SIZE   64
+      |         ^
+main.c(225): warning: 'EP1_MAX_PACKET_SIZE' macro redefined [-Wmacro-redefined]
+  225 | #define EP1_MAX_PACKET_SIZE         64U
+      |         ^
+main.c(38): note: previous definition is here
+   38 | #define EP1_MAX_PACKET_SIZE   4
+      |         ^
+main.c(228): warning: 'CUSTOM_HID_FS_BINTERVAL' macro redefined [-Wmacro-redefined]
+  228 | #define CUSTOM_HID_FS_BINTERVAL     0x0AU
+      |         ^
+main.c(43): note: previous definition is here
+   43 | #define CUSTOM_HID_FS_BINTERVAL 0x05 // Интервал опроса шины Full Speed
+      |         ^
+main.c(600): warning: unused variable 'last_mouse_time' [-Wunused-variable]
+  600 |     uint32_t last_mouse_time = 0;
+      |              ^~~~~~~~~~~~~~~
+main.c(601): warning: unused variable 'last_kbd_time' [-Wunused-variable]
+  601 |     uint32_t last_kbd_time = 0;
+      |              ^~~~~~~~~~~~~
+main.c(602): warning: unused variable 'last_media_time' [-Wunused-variable]
+  602 |     uint32_t last_media_time = 0;
+      |              ^~~~~~~~~~~~~~~
+main.c(604): warning: unused variable 'kbd_state' [-Wunused-variable]
+  604 |     uint8_t kbd_state = 0;
+      |             ^~~~~~~~~
+main.c(605): warning: unused variable 'media_state' [-Wunused-variable]
+  605 |     uint8_t media_state = 0;
+      |             ^~~~~~~~~~~
+10 warnings generated.
+compiling main.c...
+linking...
+Program Size: Code=3568 RO-data=836 RW-data=8 ZI-data=1640  
+".\Objects\USB.axf" - 0 Error(s), 10 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                https://www.keil.com/pack/ARM.CMSIS.6.2.0.pack
+                ARM::CMSIS@6.2.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 6.1.1
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F4xx_DFP.2.17.1.pack
+                Keil::STM32F4xx_DFP@2.17.1
+                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 2.6.3
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/_Target_1
+  C:/Users/pkiri/AppData/Local/Arm/Packs/ARM/CMSIS/6.2.0/CMSIS/Core/Include
+  C:/Users/pkiri/AppData/Local/Arm/Packs/Keil/STM32F4xx_DFP/2.17.1/Drivers/CMSIS/Device/ST/STM32F4xx/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE@6.1.1
+
+   * Component: Keil::Device:Startup@2.6.3
+      Include file:  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+      Source file:   MDK/Device/Source/ARM/STM32F411xx_OPT.s
+      Source file:   MDK/Device/Source/ARM/STM32F4xx_OTP.s
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f411xe.s
+      Source file:   Drivers/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

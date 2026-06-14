@@ -1,0 +1,161 @@
+#include "OV7670.h"
+
+#include "ILI9488.h"
+#include "I2C.h"
+
+const uint8_t OV7670_reg[OV7670_REG_NUM][2] = {
+		    // Clock and scaling
+		    {0x11, 0x01}, // Internal clock pre-scaler
+		    {0x6B, 0x4A}, // PLL and clock control
+
+				{0x8C, 0x00}, // 
+				
+		    // Output format: RGB565
+		    {0x12, 0x14}, // COM7: Select RGB
+		    {0x40, 0xD0}, // RGB565, full range (ok)
+				{0x3A, 0x08}, // TSLB: disable UV delay
+				{0x3D, 0x82}, // TSLB: disable UV delay
+				
+				
+				{0x01, 0x40},
+				{0x02, 0x60},
+		    
+				
+		    // Windowing (VGA)
+		    {0x32, 0x80}, // HREF
+		    {0x17, 0x16}, // HSTART
+		    {0x18, 0x04}, // HSTOP
+		    {0x03, 0x0A}, // VREF
+		    {0x19, 0x02}, // VSTART
+		    {0x1A, 0x7A}, // VSTOP
+
+		    // Color matrix
+		    {0x4F, 0x80}, 
+				{0x50, 0x80},
+		    {0x51, 0x00}, 
+				{0x52, 0x22},
+		    {0x53, 0x5E}, 
+				{0x54, 0x52},
+				
+				{0x55, 0x05},
+				
+				{0x56, 0xAA}, 
+				{0x57, 0x81},
+				
+		    {0x58, 0x9E},
+
+		    // AGC and AEC
+		    {0x13, 0xE7}, // Enable AGC, AEC, AWB
+				{0x10, 0x00}, // AECH
+		    {0x0D, 0x40}, // COM4
+		    {0x14, 0x38},
+
+		    // Gamma curve
+				
+		    {0x7A, 0x20}, 
+				{0x7B, 0x10},				
+				
+				{0x7C, 0x1E},
+		    {0x7D, 0x35}, 
+				
+				{0x7E, 0x5A}, 
+				{0x7F, 0x69},
+				
+		    {0x80, 0x76}, 
+				{0x81, 0x80}, 
+				
+				{0x82, 0x88},
+		    {0x83, 0x8F}, 
+				
+				{0x84, 0x96},
+				{0x85, 0xA3},
+				
+		    {0x86, 0xAF}, 
+				{0x87, 0xC4},
+				
+				{0x88, 0xD7},
+		    {0x89, 0xE8},
+				
+		    // Edge enhancement and denoise
+		    {0x41, 0x08}, // Edge enhancement
+		    {0x3F, 0x88}, // Edge enhancement threshold
+		    {0x75, 0x05}, {0x76, 0xE1}, // Denoise
+
+		    // AWB
+				
+		    {0x43, 0x0A}, 
+				{0x44, 0xF0},
+		    {0x45, 0x34}, 
+				{0x46, 0x58},
+		    {0x47, 0x28}, 
+				{0x48, 0x3A},
+				
+		    {0x59, 0x88}, 
+				{0x5A, 0x88},
+		    {0x5B, 0x44}, 
+				{0x5C, 0x67},
+		    {0x5D, 0x49}, 
+				{0x5E, 0x0E},
+				
+				{0x6C, 0x0A},
+				{0x6D, 0x55},				
+				{0x6E, 0x11},				
+				{0x6F, 0x9E},				
+				{0x6A, 0x40},				
+		    // Misc
+		    {0x69, 0x00}, // Auto frame control
+		    {0x6A, 0x80}, // Blue gain
+		    {0x13, 0xE7}, // Enable auto gain, exposure, white balance
+				
+				{0xB0, 0x84},
+				{0xB8, 0x0A},
+				{0xBE, 0x0A},
+				
+	//{0x70, 0xFF},
+	//{0x71, 0xFF},
+	// Finish
+	{0xFF, 0xFF} // End marker
+};
+
+uint8_t camera_read_reg(uint8_t address, uint8_t reg) {
+	return I2C_ReadData(I2C1, address, reg);
+}
+
+void camera_write_reg(uint8_t address, uint8_t reg, uint8_t data) {
+	I2C_WriteData(I2C1, address, reg, data);
+}
+
+int camera_config(void) {
+	uint8_t Camera_I2C_Data;
+	
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x0A);
+	if(Camera_I2C_Data == 0x76){
+		__NOP();
+	}
+	
+	
+	// 3. Запись конфигурационных регистров
+	for(uint8_t i = 0; i < OV7670_REG_NUM; i++) {
+		uint8_t reg = OV7670_reg[i][0];
+		uint8_t val = OV7670_reg[i][1];
+
+		if(reg == 0xFF && val == 0xFF) break; // Конец массива
+		
+		I2C_WriteData(I2C1, 0x42, reg, val);
+		// camera_write_reg(0x42, reg, val);
+	}
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x0D);
+	__NOP();
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x0D);
+	__NOP();
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x12);
+	__NOP();
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x15);
+	__NOP();
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x1E);
+	__NOP();
+	Camera_I2C_Data = I2C_ReadData(I2C1, 0x42, 0x1E);
+	__NOP();
+	
+	return 1;
+}

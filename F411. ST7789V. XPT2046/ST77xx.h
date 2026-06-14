@@ -7,14 +7,14 @@
 //==============================================================================
 #include "RCC.h"
 //==============================================================================
-#define ST77xx_CS_HIGH() 				GPIOA->ODR |= GPIO_ODR_OD12
-#define ST77xx_CS_LOW() 				GPIOA->ODR &= ~GPIO_ODR_OD12
+#define ST77xx_CS_HIGH() 				GPIOB->ODR |= GPIO_ODR_OD0
+#define ST77xx_CS_LOW() 				GPIOB->ODR &= ~GPIO_ODR_OD0
 
-#define	ST77xx_DC_HIGH()				GPIOA->ODR |= GPIO_ODR_OD11
-#define	ST77xx_DC_LOW()  				GPIOA->ODR &= ~GPIO_ODR_OD11
+#define	ST77xx_DC_HIGH()				GPIOB->ODR |= GPIO_ODR_OD2
+#define	ST77xx_DC_LOW()  				GPIOB->ODR &= ~GPIO_ODR_OD2
 
-#define ST77xx_RST_HIGH() 			GPIOA->ODR |= GPIO_ODR_OD10
-#define ST77xx_RST_LOW() 				GPIOA->ODR &= ~GPIO_ODR_OD10
+#define ST77xx_RST_HIGH() 			GPIOB->ODR |= GPIO_ODR_OD10
+#define ST77xx_RST_LOW() 				GPIOB->ODR &= ~GPIO_ODR_OD10
 //==============================================================================
 #define ST77xx_Width   	320
 #define ST77xx_Height 	240

@@ -1,0 +1,9 @@
+--cpu=Cortex-M4.fp.sp
+".\objects\main.o"
+".\objects\rcc.o"
+".\objects\interrupt_handler.o"
+".\objects\startup_stm32h747xx.o"
+".\objects\system_stm32h7xx_dualcore_boot_cm4_cm7.o"
+--ro-base 0x08100000 --entry 0x08100000 --rw-base 0x10000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\LW1.map" -o .\Objects\LW1.axf
